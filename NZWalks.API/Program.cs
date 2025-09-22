@@ -20,6 +20,7 @@ builder.Services.AddDbContext<NZWalksDbContext>(options =>
 });
 // Rejestracja serwisu w kontenerze DI (Dependency Injection). Gdy klasa potrzebuje IRegionRepository to dostanie instancjê SQLRegionRepository
 builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();
+builder.Services.AddScoped<IWalkRepository, SQLWalkRepository>();
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(AutoMapperProfiles));
 
