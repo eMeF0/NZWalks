@@ -5,12 +5,12 @@ namespace NZWalks.API.Data
 {
     public class NZWalksDbContext : DbContext
     {
-        public NZWalksDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public NZWalksDbContext(DbContextOptions<NZWalksDbContext> dbContextOptions) : base(dbContextOptions)
         {
 
         }
 
-        //To są polaczenia do tabel w bazie danych
+        //Simply connections to the tables in the database using DbSet property of type T where T is the domain model class.
         public DbSet<Difficulty> Difficulties { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Walks> Walks { get; set; }
