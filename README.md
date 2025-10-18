@@ -21,3 +21,5 @@ The application allows users to manage information about hiking trails in New Ze
 - Swagger / Swashbuckle
 - JWT Authentication
 - Dependency Injection
+
+Course - https://www.udemy.com/course/build-rest-apis-with-aspnet-core-web-api-entity-framework/
