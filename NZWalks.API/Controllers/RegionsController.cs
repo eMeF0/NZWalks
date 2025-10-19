@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,39 +20,48 @@ namespace NZWalks.API.Controllers
         private readonly NZWalksDbContext _dbContext;
         private readonly IRegionRepository _regionRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<RegionsController> _logger;
 
         public RegionsController(NZWalksDbContext dbContext, IRegionRepository regionRepository,
-            IMapper mapper)
+            IMapper mapper, ILogger<RegionsController> logger)
         {
             _dbContext = dbContext;
             _regionRepository = regionRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         //GET ALL REGIONS
         //GET: api/Regions
         [HttpGet]
-        [Authorize(Roles = "Reader")]
+        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
-            //Get data from database - Doamin Models
-            var regionsDomain = await _regionRepository.GetAllAsync();
+            try
+            {
+                //Get data from database - Doamin Models
+                var regionsDomain = await _regionRepository.GetAllAsync();
 
-            //Map Domain models to DTOs
-            //var regionsDto = new List<RegionDto>();
-            //foreach (var regionDomain in regionsDomain)
-            //{
-            //    regionsDto.Add(new RegionDto()
-            //    {
-            //        Id = regionDomain.Id,
-            //        Code = regionDomain.Code,
-            //        Name = regionDomain.Name,
-            //        RegionImageUrl = regionDomain.RegionImageUrl
-            //    });
-            //}
-
-            //Return DTOs
-            return Ok(_mapper.Map<List<RegionDto>>(regionsDomain));
+                //Map Domain models to DTOs
+                //var regionsDto = new List<RegionDto>();
+                //foreach (var regionDomain in regionsDomain)
+                //{
+                //    regionsDto.Add(new RegionDto()
+                //    {
+                //        Id = regionDomain.Id,
+                //        Code = regionDomain.Code,
+                //        Name = regionDomain.Name,
+                //        RegionImageUrl = regionDomain.RegionImageUrl
+                //    });
+                //}
+                //Return DTOs
+                return Ok(_mapper.Map<List<RegionDto>>(regionsDomain));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+                throw;
+            }
         }
 
         //Get single region by ID

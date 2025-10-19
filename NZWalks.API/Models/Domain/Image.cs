@@ -11,7 +11,7 @@ namespace NZWalks.API.Models.Domain
 
         public string FileName { get; set; }
 
-        public string FileDescription { get; set; }
+        public string? FileDescription { get; set; }
 
         public string FileExtension { get; set; }
 
